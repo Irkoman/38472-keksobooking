@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ирина Смирнова](https://up.htmlacademy.ru/nodejs/1/user/38472).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Воронин](https://up.htmlacademy.ru/nodejs/1/user/245996).
 
 ---
 
