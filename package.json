@@ -1,0 +1,27 @@
+{
+  "name": "keksobooking",
+  "version": "1.0.0",
+  "description": "Node.js training project",
+  "main": "index.js",
+  "scripts": {
+    "test:lint": "eslint .",
+    "test": "npm run test:lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Irkoman/38472-keksobooking.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Irina Smirnova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Irkoman/38472-keksobooking/issues"
+  },
+  "homepage": "https://github.com/Irkoman/38472-keksobooking#readme",
+  "devDependencies": {
+    "eslint": "4.17.0",
+    "eslint-config-htmlacademy": "0.4.2"
+  }
+}
