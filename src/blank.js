@@ -1,3 +1,5 @@
+require(`colors`);
+
 module.exports = {
   name: `blank`,
   description: `No user command`,
@@ -6,7 +8,7 @@ module.exports = {
       Hello, world!
       Эта программа будет запускать сервер «Кексобукинга».
       Автор: Ирина Смирнова.
-    `);
+    `.yellow);
     process.exit();
   }
 };

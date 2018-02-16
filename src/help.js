@@ -1,14 +1,16 @@
+require(`colors`);
+
 module.exports = {
   name: `--help`,
   description: `Shows available commands`,
   execute() {
     console.log(`
       Доступные команды:
-      --help        — вывести список доступных команд;
-      --version     — узнать версию приложения;
-      --author      — узнать имя автора приложения;
-      --license     — узнать лицензию приложения;
-      --description — вывести описание приложения;
+      ${`--help`.grey}        — ${`вывести список доступных команд`.green};
+      ${`--version`.grey}     — ${`узнать версию приложения`.green};
+      ${`--author`.grey}      — ${`узнать имя автора приложения`.green};
+      ${`--license`.grey}     — ${`узнать лицензию приложения`.green};
+      ${`--description`.grey} — ${`вывести описание приложения`.green};
     `);
   }
 };
