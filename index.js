@@ -5,13 +5,15 @@ const license = require(`./src/license`);
 const description = require(`./src/description`);
 const blank = require(`./src/blank`);
 const error = require(`./src/error`);
+const generate = require(`./src/generate`);
 
 const COMMANDS = {
   [version.name]: version.execute,
   [help.name]: help.execute,
   [author.name]: author.execute,
   [license.name]: license.execute,
-  [description.name]: description.execute
+  [description.name]: description.execute,
+  [generate.name]: generate.execute
 };
 
 const command = process.argv[2];
@@ -25,4 +27,3 @@ if (!COMMANDS[command]) {
 }
 
 COMMANDS[command]();
-process.exit();
