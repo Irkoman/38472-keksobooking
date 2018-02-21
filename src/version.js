@@ -13,5 +13,6 @@ module.exports = {
         .join(`.`);
 
     console.log(`v${coloredVersions}`);
+    process.exit();
   }
 };

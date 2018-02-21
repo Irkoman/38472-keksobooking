@@ -6,5 +6,6 @@ module.exports = {
   description: `Shows program license`,
   execute() {
     console.log(packageInfo.license.magenta);
+    process.exit();
   }
 };

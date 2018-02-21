@@ -6,7 +6,7 @@ module.exports = {
   execute(command) {
     console.error(`
       Неизвестная команда: ${command.red}
-      Чтобы прочитать правила использования приложения, наберите ${`--help`.green}
+      Чтобы прочитать правила использования приложения, набери ${`--help`.green}
     `);
     process.exit(1);
   }

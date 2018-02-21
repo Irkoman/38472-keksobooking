@@ -7,19 +7,19 @@ const access = promisify(fs.access);
 const unlink = promisify(fs.unlink);
 
 describe(`--generate command`, () => {
-  it(`should fail on nonexistent folder`, () => {
-    const tempFileName = `${__dirname}/folder/testfile.json`;
+  it(`should fail on nonexistent file`, () => {
+    const testFileName = `testfile`;
 
-    return generate.execute(10, tempFileName).then(() => {
-      assert.fail(`Path ${tempFileName} should not be available`);
+    generate.execute(10, testFileName).then(() => {
+      assert.fail(`File ${testFileName} should not be available`);
     }).catch((e) => assert.ok(e));
   });
 
   it(`should create new file`, () => {
-    const tempFileName = `${__dirname}/testfile.json`;
+    const testFileName = `testfile`;
 
-    return generate.execute(10, tempFileName)
-        .then(() => access(tempFileName))
-        .then(() => unlink(tempFileName));
+    generate.execute(10, testFileName)
+        .then(() => access(testFileName))
+        .then(() => unlink(testFileName));
   });
 });

@@ -6,5 +6,6 @@ module.exports = {
   description: `Shows program author`,
   execute() {
     console.log(packageInfo.author.cyan);
+    process.exit();
   }
 };
