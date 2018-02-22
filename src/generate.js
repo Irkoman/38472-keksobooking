@@ -11,8 +11,8 @@ module.exports = {
   execute: async () => {
     const {count, filePath} = await userInput();
 
-    if (!count || !filePath) {
-      console.log(`Генерация данных отменена. Попробуй указать другое имя файла.`);
+    if (!filePath) {
+      console.log(`Генерация данных отменена. Файл может быть перезаписан только после команды ${`yes`.green}.`);
       process.exit();
     }
 

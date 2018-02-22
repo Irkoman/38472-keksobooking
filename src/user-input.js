@@ -21,7 +21,7 @@ const userInput = async () => {
 
     try {
       await access(filePath, fs.constants.W_OK);
-      const rewrite = await prompt(`Такой файл уже существует, перезаписать его? [yes/no]: `);
+      const rewrite = await prompt(`Такой файл уже существует. Если хочешь перезаписать его, набери ${`yes`.green}: `);
       return (rewrite === `yes`) ? {count, filePath} : {};
     } catch (error) {
       console.log(`Создаю файл с именем ${`${fileName}.json`.blue}...`);
