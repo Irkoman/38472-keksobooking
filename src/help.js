@@ -11,6 +11,8 @@ module.exports = {
       ${`--author`.grey}      — ${`узнать имя автора приложения`.green};
       ${`--license`.grey}     — ${`узнать лицензию приложения`.green};
       ${`--description`.grey} — ${`вывести описание приложения`.green};
+      ${`--generate`.grey}    — ${`сгенерировать данные для проекта Keksobooking`.green};
     `);
+    process.exit();
   }
 };

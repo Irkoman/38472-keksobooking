@@ -1,9 +1,9 @@
+const intro = require(`./src/intro`);
 const version = require(`./src/version`);
 const help = require(`./src/help`);
 const author = require(`./src/author`);
 const license = require(`./src/license`);
 const description = require(`./src/description`);
-const blank = require(`./src/blank`);
 const error = require(`./src/error`);
 const generate = require(`./src/generate`);
 
@@ -19,7 +19,7 @@ const COMMANDS = {
 const command = process.argv[2];
 
 if (!command) {
-  blank.execute();
+  intro.execute();
 }
 
 if (!COMMANDS[command]) {
