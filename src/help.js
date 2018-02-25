@@ -12,6 +12,7 @@ module.exports = {
       ${`--license`.grey}     — ${`узнать лицензию приложения`.green};
       ${`--description`.grey} — ${`вывести описание приложения`.green};
       ${`--generate`.grey}    — ${`сгенерировать данные для проекта Keksobooking`.green};
+      ${`--server`.grey}      — ${`запустить сервер`.green};
     `);
     process.exit();
   }
