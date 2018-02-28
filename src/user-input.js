@@ -41,8 +41,13 @@ module.exports = {
     const answer = await prompt(`Введи номер порта, на котором должен быть запущен сервер.\nИли нажми ${`Enter`.green}, тогда будет использован порт по умолчанию — ${`3000`.green} `);
     const port = answer || `3000`;
 
-    if (!parseInt(port, 10) || port < MIN_PORT || port > MAX_PORT) {
-      console.log(`Номер порта должен быть числом в диапазоне от ${MIN_PORT} до ${MAX_PORT}.`.red);
+    if (!parseInt(port, 10)) {
+      console.log(`Вы ввели не число.`.red);
+      process.exit(1);
+    }
+
+    if (port < MIN_PORT || port > MAX_PORT) {
+      console.log(`Номер порта должен находиться в диапазоне от ${MIN_PORT} до ${MAX_PORT}.`.red);
       process.exit(1);
     }
 
