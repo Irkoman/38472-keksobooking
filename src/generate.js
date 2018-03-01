@@ -1,15 +1,15 @@
 const fs = require(`fs`);
 const {promisify} = require(`util`);
 const writeFile = promisify(fs.writeFile);
+const userInput = require(`./user-input`);
 const {generateEntity} = require(`./generator/generate-entity`);
-const {userInput} = require(`./user-input`);
 const fileWriteOptions = {encoding: `utf-8`, mode: 0o644};
 
 module.exports = {
   name: `--generate`,
   description: `Generates project data`,
   execute: async () => {
-    const {count, filePath} = await userInput();
+    const {count, filePath} = await userInput.getGenerateInfo();
 
     if (!filePath) {
       console.log(`Генерация данных отменена. Файл может быть перезаписан только после команды ${`yes`.green}.`);

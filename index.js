@@ -6,6 +6,7 @@ const license = require(`./src/license`);
 const description = require(`./src/description`);
 const error = require(`./src/error`);
 const generate = require(`./src/generate`);
+const server = require(`./src/server`);
 
 const COMMANDS = {
   [version.name]: version.execute,
@@ -13,7 +14,8 @@ const COMMANDS = {
   [author.name]: author.execute,
   [license.name]: license.execute,
   [description.name]: description.execute,
-  [generate.name]: generate.execute
+  [generate.name]: generate.execute,
+  [server.name]: server.execute
 };
 
 const command = process.argv[2];
