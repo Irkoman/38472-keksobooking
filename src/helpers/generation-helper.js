@@ -39,6 +39,16 @@ const FEATURES = [
   `conditioner`
 ];
 
+const NAMES = [
+  `Keks`,
+  `Kirpich`,
+  `Pavel`,
+  `Nikolay`,
+  `Alex`,
+  `Ulyana`,
+  `Julia`
+];
+
 const PHOTOS = [
   `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
   `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
@@ -52,9 +62,6 @@ const generateEntity = () => {
   };
 
   return {
-    author: {
-      avatar: `https://robohash.org/${getRandomString()}?bgset=bg1`
-    },
     offer: {
       title: getRandomFromArray(TITLES),
       address: `${location.x}, ${location.y}`,
@@ -66,6 +73,8 @@ const generateEntity = () => {
       checkout: getRandomFromArray(CHECKINS),
       features: getMixedArray(FEATURES).slice(getRandomFromRange(0, FEATURES.length - 1)),
       description: ``,
+      name: getRandomFromArray(NAMES),
+      avatar: `https://robohash.org/${getRandomString()}?bgset=bg1`,
       photos: getMixedArray(PHOTOS)
     },
     location,

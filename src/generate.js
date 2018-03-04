@@ -2,7 +2,7 @@ const fs = require(`fs`);
 const {promisify} = require(`util`);
 const writeFile = promisify(fs.writeFile);
 const userInput = require(`./user-input`);
-const {generateOffers} = require(`./generator/generate-offers`);
+const {generateOffers} = require(`./helpers/generation-helper`);
 const fileWriteOptions = {encoding: `utf-8`, mode: 0o644};
 
 module.exports = {
