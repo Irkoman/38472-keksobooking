@@ -1,5 +1,6 @@
 const {
   getRandomString,
+  getRandomDate,
   getMixedArray,
   getRandomFromArray,
   getRandomFromRange
@@ -67,12 +68,15 @@ const generateEntity = () => {
       description: ``,
       photos: getMixedArray(PHOTOS)
     },
-    location
+    location,
+    date: getRandomDate()
   };
 };
 
+const generateOffers = (count) => [...new Array(count)].map(() => generateEntity());
+
 module.exports = {
-  generateEntity,
+  generateOffers,
   TYPES,
   CHECKINS,
   FEATURES,

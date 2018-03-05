@@ -1,13 +1,13 @@
 const {
-  generateEntity,
+  generateOffers,
   TYPES,
   CHECKINS,
   FEATURES,
   PHOTOS
-} = require(`../src/generator/generate-entity`);
+} = require(`../src/generator/generate-offers`);
 const assert = require(`assert`);
 
-const {author, offer, location} = generateEntity();
+const {author, offer, location} = generateOffers(1)[0];
 
 describe(`Generated entity: #author`, () => {
   it(`#avatar path is a string value`, () => {

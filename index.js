@@ -6,7 +6,7 @@ const license = require(`./src/license`);
 const description = require(`./src/description`);
 const error = require(`./src/error`);
 const generate = require(`./src/generate`);
-const server = require(`./src/server`);
+const server = require(`./src/server/server`);
 
 const COMMANDS = {
   [version.name]: version.execute,
