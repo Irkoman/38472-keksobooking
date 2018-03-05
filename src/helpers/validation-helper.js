@@ -1,4 +1,4 @@
-const DEFAULT_CONVERTER = (value) => value;
+const defaultConverter = (value) => value;
 
 const exists = (value) => {
   switch (typeof value) {
@@ -13,7 +13,7 @@ const exists = (value) => {
 
 const printError = (field, value, message) => ({field, value, message});
 
-const validateField = (data, field, {required = false, converter = DEFAULT_CONVERTER, assertions}) => {
+const validateField = (data, field, {required = false, converter = defaultConverter, assertions}) => {
   const value = data[field];
 
   if (!value && !required) {
