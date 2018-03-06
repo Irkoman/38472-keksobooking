@@ -5,8 +5,8 @@ const {
   inTextRange,
   isNumeric,
   isImage,
-  isSetOfImages,
-  isUnique
+  isArrayOfImages,
+  isUniqueArray
 } = require(`../../../helpers/assertion-helper`);
 
 const {getRandomFromArray} = require(`../../../helpers/random-helper`);
@@ -74,7 +74,7 @@ const offerSchema = {
   },
   'features': {
     assertions: [
-      someOf(FEATURES), isUnique()
+      someOf(FEATURES), isUniqueArray()
     ]
   },
   'description': {
@@ -96,7 +96,7 @@ const offerSchema = {
   },
   'photos': {
     assertions: [
-      isSetOfImages()
+      isArrayOfImages()
     ]
   }
 };
