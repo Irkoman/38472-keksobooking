@@ -4,20 +4,10 @@ const {
   CHECKINS,
   FEATURES,
   PHOTOS
-} = require(`../src/generator/generate-offers`);
+} = require(`../src/helpers/generation-helper`);
 const assert = require(`assert`);
 
-const {author, offer, location} = generateOffers(1)[0];
-
-describe(`Generated entity: #author`, () => {
-  it(`#avatar path is a string value`, () => {
-    assert.equal(typeof author.avatar, `string`);
-  });
-
-  it(`#avatar path starts with https://robohash.org/`, () => {
-    assert.ok(author.avatar.startsWith(`https://robohash.org/`), true);
-  });
-});
+const {offer, location} = generateOffers(1)[0];
 
 describe(`Generated entity: #offer`, () => {
   it(`#title is a string value`, () => {
@@ -58,6 +48,14 @@ describe(`Generated entity: #offer`, () => {
 
   it(`#description is an empty string`, () => {
     assert.strictEqual(offer.description, ``);
+  });
+
+  it(`#avatar path is a string value`, () => {
+    assert.equal(typeof offer.avatar, `string`);
+  });
+
+  it(`#avatar path starts with https://robohash.org/`, () => {
+    assert.ok(offer.avatar.startsWith(`https://robohash.org/`), true);
   });
 
   it(`#photos is an array of definite strings`, () => {

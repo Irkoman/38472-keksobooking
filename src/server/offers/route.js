@@ -1,10 +1,12 @@
 const {Router} = require(`express`);
 const bodyParser = require(`body-parser`);
 const multer = require(`multer`);
-const {generateOffers} = require(`../../generator/generate-offers`);
+const {generateOffers} = require(`../../helpers/generation-helper`);
 const {validate} = require(`../../helpers/validation-helper`);
 const QueryError = require(`../errors/query-error`);
+const ValidationError = require(`../errors/validation-error`);
 const querySchema = require(`./schemas/query-schema`);
+const offerSchema = require(`./schemas/offer-schema`);
 const upload = multer({storage: multer.memoryStorage()});
 
 const DEFAULT_SKIP = 0;
@@ -48,7 +50,14 @@ offersRouter.get(`/:date`, (req, res) => {
 });
 
 offersRouter.post(``, upload.single(`avatar`), (req, res) => {
-  res.send(req.body);
+  const data = req.body;
+  const errors = validate(data, offerSchema);
+
+  if (errors.length > 0) {
+    throw new ValidationError(errors);
+  }
+
+  res.send(data);
 });
 
 offersRouter.use((exception, req, res, next) => {
