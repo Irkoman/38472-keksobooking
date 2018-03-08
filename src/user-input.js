@@ -20,15 +20,15 @@ module.exports = {
 
     if (count) {
       const enteredFilename = await prompt(`Укажи имя файла, в котором будут сохранены данные.\nИли нажми ${`Enter`.green}, тогда в текущей директории будет создан файл ${`data.json`.green} `);
-      const fileName = enteredFilename || `data`;
-      const filePath = `${process.cwd()}/${fileName}.json`;
+      const filename = enteredFilename || `data`;
+      const filePath = `${process.cwd()}/${filename}.json`;
 
       try {
         await access(filePath, fs.constants.W_OK);
         const rewrite = await prompt(`Такой файл уже существует. Если хочешь перезаписать его, набери ${`yes`.green}: `);
         return (rewrite === `yes`) ? {count, filePath} : {};
       } catch (error) {
-        console.log(`Создаю файл с именем ${`${fileName}.json`.blue}...`);
+        console.log(`Создаю файл с именем ${`${filename}.json`.blue}...`);
         return {count, filePath};
       }
     } else {

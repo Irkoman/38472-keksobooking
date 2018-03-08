@@ -1,14 +1,17 @@
 const request = require(`supertest`);
 const assert = require(`assert`);
-const offerMock = require(`./mocks/offer-mock.json`);
-const {app} = require(`../src/server/server`);
+const app = require(`express`)();
+const mockOffersRouter = require(`./mock-offers-router`);
+const mockOffer = require(`./mocks/mock-offer.json`);
+
+app.use(`/api/offers`, mockOffersRouter);
 
 describe(`POST /api/offers`, () => {
   it(`should consume JSON`, () => {
     return request(app).post(`/api/offers`)
-        .send(offerMock)
+        .send(mockOffer)
         .expect(200)
-        .then((response) => assert.deepEqual(response.body, offerMock));
+        .then((response) => assert.deepEqual(response.body, mockOffer));
   });
 
   it(`should consume form-data`, () => {
@@ -18,12 +21,14 @@ describe(`POST /api/offers`, () => {
         .field(`price`, 5000)
         .field(`type`, `bungalo`)
         .field(`rooms`, 5)
+        .field(`date`, 1512390486449)
         .expect(200, {
           title: `Неуютное бунгало по колено в воде`,
           address: `355, 728`,
           price: 5000,
           type: `bungalo`,
-          rooms: 5
+          rooms: 5,
+          date: 1512390486449
         });
   });
 
@@ -34,13 +39,19 @@ describe(`POST /api/offers`, () => {
         .field(`price`, 5000)
         .field(`type`, `bungalo`)
         .field(`rooms`, 5)
+        .field(`date`, 1512390486449)
         .attach(`avatar`, `test/fixtures/success_kid.png`)
         .expect(200, {
           title: `Неуютное бунгало по колено в воде`,
           address: `355, 728`,
           price: 5000,
           type: `bungalo`,
-          rooms: 5
+          rooms: 5,
+          date: 1512390486449,
+          avatar: {
+            mimetype: `image/png`,
+            path: `/api/offers/1512390486449/avatar`
+          }
         });
   });
 

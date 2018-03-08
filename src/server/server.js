@@ -1,6 +1,8 @@
 const express = require(`express`);
 const userInput = require(`../user-input`);
-const offersRouter = require(`./offers/route`);
+const offerStore = require(`./offers/store`);
+const imageStore = require(`./images/store`);
+const offersRouter = require(`./offers/route`)(offerStore, imageStore);
 
 const app = express();
 app.use(express.static(`static`));
