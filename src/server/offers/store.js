@@ -3,9 +3,7 @@ const database = require(`../../database/database`);
 const setupCollection = async () => {
   const db = await database;
 
-  const collection = db.collection(`offers`);
-  collection.createIndex({date: -1}, {unique: true});
-  return collection;
+  return db.collection(`offers`);
 };
 
 class OfferStore {
@@ -24,7 +22,6 @@ class OfferStore {
   async save(offerData) {
     return (await this.collection).insertOne(offerData);
   }
-
 }
 
 const offersCollection = setupCollection()

@@ -28,9 +28,9 @@ const toPage = async (cursor, skip, limit) => {
   };
 };
 
-const async = (fn) => (req, res, next) => fn(req, res, next).catch(next);
+const asyncFn = (fn) => (req, res, next) => fn(req, res, next).catch(next);
 
-offersRouter.get(``, async(async (req, res) => {
+offersRouter.get(``, asyncFn(async (req, res) => {
   const errors = validate(req.query, querySchema);
 
   if (errors.length > 0) {
@@ -43,7 +43,7 @@ offersRouter.get(``, async(async (req, res) => {
   res.send(await toPage(offers, skip, limit));
 }));
 
-offersRouter.get(`/:date`, async(async (req, res) => {
+offersRouter.get(`/:date`, asyncFn(async (req, res) => {
   const date = req.params.date;
   const offer = await offersRouter.offerStore.getOffer(date);
 
@@ -54,7 +54,7 @@ offersRouter.get(`/:date`, async(async (req, res) => {
   }
 }));
 
-offersRouter.get(`/:date/avatar`, async(async (req, res) => {
+offersRouter.get(`/:date/avatar`, asyncFn(async (req, res) => {
   const date = req.params.date;
   const offer = await offersRouter.offerStore.getOffer(date);
 
@@ -80,7 +80,7 @@ offersRouter.get(`/:date/avatar`, async(async (req, res) => {
   stream.pipe(res);
 }));
 
-offersRouter.post(``, upload.single(`avatar`), async(async (req, res) => {
+offersRouter.post(``, upload.single(`avatar`), asyncFn(async (req, res) => {
   const data = req.body;
   const avatar = req.file;
 

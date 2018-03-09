@@ -21,11 +21,10 @@ class ImageStore {
 
   async get(filename) {
     const bucket = await this.getBucket();
-    const results = await (bucket).find({filename}).toArray();
-    const entity = results[0];
+    const results = await bucket.find({filename}).toArray();
 
-    return !entity ? void 0 : {
-      info: entity,
+    return {
+      info: results[0],
       stream: bucket.openDownloadStreamByName(filename)
     };
   }
