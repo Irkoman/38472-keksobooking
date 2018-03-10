@@ -1,3 +1,4 @@
+require(`dotenv`).config();
 const intro = require(`./src/intro`);
 const version = require(`./src/version`);
 const help = require(`./src/help`);
