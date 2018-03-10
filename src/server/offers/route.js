@@ -8,6 +8,7 @@ const ValidationError = require(`../errors/validation-error`);
 const NotFoundError = require(`../errors/not-found-error`);
 const querySchema = require(`./schemas/query-schema`);
 const offerSchema = require(`./schemas/offer-schema`);
+const logger = require(`../../logger`);
 const upload = multer({storage: multer.memoryStorage()});
 
 const SUCCESS_CODE = 200;
@@ -17,7 +18,14 @@ const DEFAULT_SKIP = 0;
 const DEFAULT_LIMIT = 20;
 
 const offersRouter = new Router();
+
 offersRouter.use(bodyParser.json());
+
+offersRouter.use((req, res, next) => {
+  res.header(`Access-Control-Allow-Origin`, `*`);
+  res.header(`Access-Control-Allow-Headers`, `Origin, X-Requested-With, Content-Type, Accept`);
+  next();
+});
 
 const toPage = async (cursor, skip, limit) => {
   return {
@@ -81,12 +89,15 @@ offersRouter.get(`/:date/avatar`, asyncFn(async (req, res) => {
 }));
 
 offersRouter.post(``, upload.single(`avatar`), asyncFn(async (req, res) => {
-  const data = req.body;
+  const date = Date.now().toString();
+  const data = {...req.body, date };
   const avatar = req.file;
 
   if (avatar) {
     data.avatar = avatar;
   }
+
+  logger.info(`Получены данные от пользователя: `, data);
 
   const errors = validate(data, offerSchema);
 

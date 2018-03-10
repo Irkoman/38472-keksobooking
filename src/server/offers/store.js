@@ -1,4 +1,5 @@
 const database = require(`../../database/database`);
+const logger = require(`../../logger`);
 
 const setupCollection = async () => {
   const db = await database;
@@ -25,6 +26,6 @@ class OfferStore {
 }
 
 const offersCollection = setupCollection()
-    .catch((error) => console.error(`Не удалось создать коллекцию.`, error));
+    .catch((error) => logger.error(`Не удалось создать коллекцию.`, error));
 
 module.exports = new OfferStore(offersCollection);
