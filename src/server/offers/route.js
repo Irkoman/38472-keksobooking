@@ -3,6 +3,8 @@ const bodyParser = require(`body-parser`);
 const multer = require(`multer`);
 const createStreamFromBuffer = require(`../../helpers/stream-helper`);
 const {validate} = require(`../../helpers/validation-helper`);
+const {NAMES} = require(`../../helpers/generation-helper`);
+const {getRandomFromArray} = require(`../../helpers/random-helper`);
 const QueryError = require(`../errors/query-error`);
 const ValidationError = require(`../errors/validation-error`);
 const NotFoundError = require(`../errors/not-found-error`);
@@ -52,7 +54,7 @@ offersRouter.get(``, asyncFn(async (req, res) => {
 }));
 
 offersRouter.get(`/:date`, asyncFn(async (req, res) => {
-  const date = req.params.date;
+  const date = +req.params.date;
   const offer = await offersRouter.offerStore.getOffer(date);
 
   if (!offer) {
@@ -63,7 +65,7 @@ offersRouter.get(`/:date`, asyncFn(async (req, res) => {
 }));
 
 offersRouter.get(`/:date/avatar`, asyncFn(async (req, res) => {
-  const date = req.params.date;
+  const date = +req.params.date;
   const offer = await offersRouter.offerStore.getOffer(date);
 
   if (!offer) {
@@ -89,9 +91,16 @@ offersRouter.get(`/:date/avatar`, asyncFn(async (req, res) => {
 }));
 
 offersRouter.post(``, upload.single(`avatar`), asyncFn(async (req, res) => {
-  const date = Date.now().toString();
-  const data = {...req.body, date };
+  const data = req.body;
+  const coordinates = data.address.split(`, `);
   const avatar = req.file;
+
+  data.price = +req.body.price;
+  data.rooms = +req.body.rooms;
+  data.capacity = +req.body.capacity;
+  data.location = {x: +coordinates[0], y: +coordinates[1]};
+  data.name = req.body.name || getRandomFromArray(NAMES);
+  data.date = req.body.date || Date.now();
 
   if (avatar) {
     data.avatar = avatar;

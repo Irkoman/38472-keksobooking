@@ -68,7 +68,7 @@ const generateEntity = () => {
       price: getRandomFromRange(1000, 1000000),
       type: getRandomFromArray(TYPES),
       rooms: getRandomFromRange(1, 5),
-      guests: getRandomFromRange(1, 150),
+      capacity: getRandomFromRange(1, 150),
       checkin: getRandomFromArray(CHECKINS),
       checkout: getRandomFromArray(CHECKINS),
       features: getMixedArray(FEATURES).slice(getRandomFromRange(0, FEATURES.length - 1)),
@@ -89,5 +89,6 @@ module.exports = {
   TYPES,
   CHECKINS,
   FEATURES,
+  NAMES,
   PHOTOS
 };
