@@ -9,13 +9,10 @@ const {
   isUniqueArray
 } = require(`../../../helpers/assertion-helper`);
 
-const {getRandomFromArray} = require(`../../../helpers/random-helper`);
-
 const {
   TYPES,
   CHECKINS,
-  FEATURES,
-  NAMES
+  FEATURES
 } = require(`../../../helpers/generation-helper`);
 
 const MIN_TITLE_LENGTH = 30;
@@ -84,7 +81,7 @@ const offerSchema = {
     ]
   },
   'name': {
-    converter: (value) => value ? value.trim() : getRandomFromArray(NAMES),
+    converter: (value) => value.trim(),
     assertions: [
       inTextRange(MIN_NAME_LENGTH, MAX_NAME_LENGTH)
     ]

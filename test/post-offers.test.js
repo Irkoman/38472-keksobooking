@@ -16,47 +16,64 @@ describe(`POST /api/offers`, () => {
 
   it(`should consume form-data`, () => {
     return request(app).post(`/api/offers`)
+        .field(`name`, `Kirpich`)
         .field(`title`, `Неуютное бунгало по колено в воде`)
         .field(`address`, `355, 728`)
         .field(`price`, 5000)
         .field(`type`, `bungalo`)
         .field(`rooms`, 5)
-        .field(`date`, 1512390486449)
+        .field(`capacity`, 2)
+        .field(`date`, 1520750535282)
         .expect(200, {
+          name: `Kirpich`,
           title: `Неуютное бунгало по колено в воде`,
           address: `355, 728`,
           price: 5000,
           type: `bungalo`,
           rooms: 5,
-          date: 1512390486449
+          capacity: 2,
+          location: {
+            x: 355,
+            y: 728
+          },
+          date: 1520750535282
         });
   });
 
   it(`should consume form-data with avatar`, () => {
     return request(app).post(`/api/offers`)
+        .field(`name`, `Kirpich`)
         .field(`title`, `Неуютное бунгало по колено в воде`)
         .field(`address`, `355, 728`)
         .field(`price`, 5000)
         .field(`type`, `bungalo`)
         .field(`rooms`, 5)
-        .field(`date`, 1512390486449)
+        .field(`capacity`, 2)
+        .field(`date`, 1520750535282)
         .attach(`avatar`, `test/fixtures/success_kid.png`)
         .expect(200, {
+          name: `Kirpich`,
           title: `Неуютное бунгало по колено в воде`,
           address: `355, 728`,
           price: 5000,
           type: `bungalo`,
           rooms: 5,
-          date: 1512390486449,
+          capacity: 2,
+          location: {
+            x: 355,
+            y: 728
+          },
+          date: 1520750535282,
           avatar: {
             mimetype: `image/png`,
-            path: `/api/offers/1512390486449/avatar`
+            path: `/api/offers/1520750535282/avatar`
           }
         });
   });
 
   it(`should fail if data is invalid`, () => {
     return request(app).post(`/api/offers`)
+        .field(`name`, `Нараганзетта Зильберштейн-Пупышева`)
         .field(`title`, `Плохой заголовок`)
         .field(`address`, 541)
         .field(`price`, 5000000)
@@ -65,7 +82,6 @@ describe(`POST /api/offers`, () => {
         .field(`checkin`, 2300)
         .field(`features`, [`wifi`, `parking`, `wifi`])
         .field(`description`, `Недостаточное описание`)
-        .field(`name`, `Нараганзетта Зильберштейн-Пупышева`)
         .attach(`avatar`, `test/fixtures/success_kid.png`)
         .expect(400, {
           name: `Некорректные данные`,
@@ -79,7 +95,7 @@ describe(`POST /api/offers`, () => {
             message: `должно содержать от 7 до 100 символов`
           }, {
             field: `price`,
-            value: `5000000`,
+            value: 5000000,
             message: `должно находиться в диапазоне от 1 до 1000000`
           }, {
             field: `type`,
@@ -87,7 +103,7 @@ describe(`POST /api/offers`, () => {
             message: `должно быть одним из [flat,palace,house,bungalo]`
           }, {
             field: `rooms`,
-            value: `1001`,
+            value: 1001,
             message: `должно находиться в диапазоне от 0 до 1000`
           }, {
             field: `checkin`,

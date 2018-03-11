@@ -30,8 +30,8 @@ describe(`Generated entity: #offer`, () => {
     assert.ok((offer.rooms) > 0 && (offer.rooms < 6), true);
   });
 
-  it(`#guests is a number`, () => {
-    assert.equal(typeof offer.guests, `number`);
+  it(`#capacity is a number`, () => {
+    assert.equal(typeof offer.capacity, `number`);
   });
 
   it(`#checkin is one of '12:00'|'13:00'|'14:00'`, () => {
