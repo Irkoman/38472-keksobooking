@@ -41,11 +41,11 @@ const FEATURES = [
 
 const NAMES = [
   `Keks`,
-  `Kirpich`,
   `Pavel`,
   `Nikolay`,
   `Alex`,
   `Ulyana`,
+  `Anastasyia`,
   `Julia`
 ];
 

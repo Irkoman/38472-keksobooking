@@ -1,17 +1,56 @@
 const request = require(`supertest`);
-const assert = require(`assert`);
 const app = require(`express`)();
 const mockOffersRouter = require(`./mock-offers-router`);
-const mockOffer = require(`./mocks/mock-offer.json`);
 
 app.use(`/api/offers`, mockOffersRouter);
+
+const mockOffer = {
+  name: `Kirpich`,
+  title: `Неуютное бунгало по колено в воде`,
+  address: `355, 728`,
+  price: 5000,
+  type: `bungalo`,
+  rooms: 5,
+  capacity: 2,
+  checkin: `14:00`,
+  checkout: `14:00`,
+  features: [
+    `wifi`,
+    `parking`
+  ],
+  description: `Одноэтажный дом для одной семьи. Без детей и животных. Только славяне.`,
+  date: 1520750535282
+};
 
 describe(`POST /api/offers`, () => {
   it(`should consume JSON`, () => {
     return request(app).post(`/api/offers`)
         .send(mockOffer)
-        .expect(200)
-        .then((response) => assert.deepEqual(response.body, mockOffer));
+        .expect(200, {
+          author: {
+            name: `Kirpich`
+          },
+          offer: {
+            title: `Неуютное бунгало по колено в воде`,
+            address: `355, 728`,
+            price: 5000,
+            type: `bungalo`,
+            rooms: 5,
+            capacity: 2,
+            checkin: `14:00`,
+            checkout: `14:00`,
+            features: [
+              `wifi`,
+              `parking`
+            ],
+            description: `Одноэтажный дом для одной семьи. Без детей и животных. Только славяне.`
+          },
+          location: {
+            x: 355,
+            y: 728
+          },
+          date: 1520750535282
+        });
   });
 
   it(`should consume form-data`, () => {
@@ -25,13 +64,17 @@ describe(`POST /api/offers`, () => {
         .field(`capacity`, 2)
         .field(`date`, 1520750535282)
         .expect(200, {
-          name: `Kirpich`,
-          title: `Неуютное бунгало по колено в воде`,
-          address: `355, 728`,
-          price: 5000,
-          type: `bungalo`,
-          rooms: 5,
-          capacity: 2,
+          author: {
+            name: `Kirpich`
+          },
+          offer: {
+            title: `Неуютное бунгало по колено в воде`,
+            address: `355, 728`,
+            price: 5000,
+            type: `bungalo`,
+            rooms: 5,
+            capacity: 2
+          },
           location: {
             x: 355,
             y: 728
@@ -52,22 +95,26 @@ describe(`POST /api/offers`, () => {
         .field(`date`, 1520750535282)
         .attach(`avatar`, `test/fixtures/success_kid.png`)
         .expect(200, {
-          name: `Kirpich`,
-          title: `Неуютное бунгало по колено в воде`,
-          address: `355, 728`,
-          price: 5000,
-          type: `bungalo`,
-          rooms: 5,
-          capacity: 2,
+          author: {
+            name: `Kirpich`,
+            avatar: {
+              mimetype: `image/png`,
+              path: `/api/offers/1520750535282/avatar`
+            }
+          },
+          offer: {
+            title: `Неуютное бунгало по колено в воде`,
+            address: `355, 728`,
+            price: 5000,
+            type: `bungalo`,
+            rooms: 5,
+            capacity: 2
+          },
           location: {
             x: 355,
             y: 728
           },
-          date: 1520750535282,
-          avatar: {
-            mimetype: `image/png`,
-            path: `/api/offers/1520750535282/avatar`
-          }
+          date: 1520750535282
         });
   });
 

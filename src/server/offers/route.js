@@ -48,13 +48,13 @@ offersRouter.get(``, asyncFn(async (req, res) => {
   }
 
   const offers = await offersRouter.offerStore.getAllOffers();
-  const skip = +req.query.skip || DEFAULT_SKIP;
-  const limit = +req.query.limit || DEFAULT_LIMIT;
+  const skip = parseInt(req.query.skip, 10) || DEFAULT_SKIP;
+  const limit = parseInt(req.query.limit, 10) || DEFAULT_LIMIT;
   res.send(await toPage(offers, skip, limit));
 }));
 
 offersRouter.get(`/:date`, asyncFn(async (req, res) => {
-  const date = +req.params.date;
+  const date = parseInt(req.params.date, 10);
   const offer = await offersRouter.offerStore.getOffer(date);
 
   if (!offer) {
@@ -65,14 +65,14 @@ offersRouter.get(`/:date`, asyncFn(async (req, res) => {
 }));
 
 offersRouter.get(`/:date/avatar`, asyncFn(async (req, res) => {
-  const date = +req.params.date;
+  const date = parseInt(req.params.date, 10);
   const offer = await offersRouter.offerStore.getOffer(date);
 
   if (!offer) {
     throw new NotFoundError(`Не найдено объявление с датой ${date}.`);
   }
 
-  const avatar = offer.avatar;
+  const avatar = offer.author.avatar;
 
   if (!avatar) {
     throw new NotFoundError(`В объявлении с датой ${date} нет фото арендодателя.`);
@@ -81,7 +81,7 @@ offersRouter.get(`/:date/avatar`, asyncFn(async (req, res) => {
   const {info, stream} = await offersRouter.imageStore.get(avatar.path);
 
   if (!info) {
-    throw new NotFoundError(`Файл не нвйден.`);
+    throw new NotFoundError(`Файл не найден.`);
   }
 
   res.set(`content-type`, avatar.mimetype);
@@ -90,23 +90,53 @@ offersRouter.get(`/:date/avatar`, asyncFn(async (req, res) => {
   stream.pipe(res);
 }));
 
+const structurize = (data) => {
+  const coordinates = data.address.split(`, `);
+
+  const offer = {
+    author: {
+      name: data.name || getRandomFromArray(NAMES)
+    },
+    offer: {
+      title: data.title,
+      address: data.address,
+      description: data.description,
+      price: parseInt(data.price, 10),
+      type: data.type,
+      rooms: parseInt(data.rooms, 10),
+      capacity: parseInt(data.capacity, 10),
+      checkin: data.checkin,
+      checkout: data.checkout,
+      features: data.features
+    },
+    location: {
+      x: parseFloat(coordinates[0]),
+      y: parseFloat(coordinates[1]),
+    },
+    date: data.date
+  };
+
+  if (data.avatar) {
+    offer.author.avatar = data.avatar;
+  }
+
+  return offer;
+};
+
 offersRouter.post(``, upload.single(`avatar`), asyncFn(async (req, res) => {
   const data = req.body;
-  const coordinates = data.address.split(`, `);
   const avatar = req.file;
-
-  data.price = +req.body.price;
-  data.rooms = +req.body.rooms;
-  data.capacity = +req.body.capacity;
-  data.location = {x: +coordinates[0], y: +coordinates[1]};
-  data.name = req.body.name || getRandomFromArray(NAMES);
   data.date = req.body.date || Date.now();
+
+  logger.info(`Получены данные от пользователя: `, data);
 
   if (avatar) {
     data.avatar = avatar;
   }
 
-  logger.info(`Получены данные от пользователя: `, data);
+  if (data.features && !Array.isArray(data.features)) {
+    data.features = [data.features];
+  }
 
   const errors = validate(data, offerSchema);
 
@@ -124,8 +154,9 @@ offersRouter.post(``, upload.single(`avatar`), asyncFn(async (req, res) => {
     data.avatar = avatarInfo;
   }
 
-  await offersRouter.offerStore.save(data);
-  res.send(data);
+  const offer = structurize(data);
+  await offersRouter.offerStore.save(offer);
+  res.send(offer);
 }));
 
 offersRouter.use((exception, req, res, next) => {
